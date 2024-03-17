@@ -1,0 +1,97 @@
+ “Rhombi vs Hexagons” is a simplified version of the game “Plants vs Zombies” developed using
+“GFX Framework” — a graphics framework used by the Polytechnic University of Bucharest. The
+game was developed as an assignment for “Elements of Computer Graphics”.
+
+1. Rules
+
+The purpose of the game is to defend the “base” against enemies, using turrets that shoot
+projectiles. The enemies are of four types (based on color), and each can only be attacked by a
+turret of the same type.
+Enemies come from the right side of the screen on three horizontal lines. Turrets can be placed
+on a 3x3 grid and only attack enemies on the same line. Depending on the type, turrets cost from
+one to four points. Points periodically spawn on the screen and can be collected. Each time an
+enemy crosses the red line, that is the base, one of the three lives available initially is lost. When
+all lives are lost, the game is over.
+Between the line and the grid, one-time aids are present, which attack everything in their path
+once an enemy touches them
+
+2. Implementation
+
+2.1. Visual Elements
+
+In GFX, shapes are composed of triangles. They are created using a combination of vertex and
+index vectors. Inside the vertex matrix, each vertex is specified using its coordinates along the X,
+Y and Z axes. Afterwards, inside the index vector, each triangle is specified by listing its indexes.
+
+• Playing Field
+
+The playing field comprises a 3x3 grid made up of squares, where turrets can be and a
+rectangle placed vertically, which acts as the base. Both the squares and the rectangles
+are made using two triangles.
+
+• Turrets
+
+The turrets are composed of a rhombus and a rectangle pointing rightward. The rhombi
+are also built using two triangles.
+
+• Enemies
+
+The enemies take the shape of hexagons with an outline colored differently. Hexagons
+are built using six triangles with the center of the hexagon being a common index for all
+six.
+
+• Projectiles/Points
+
+Both the projectiles and points look like stars, although the projectiles are bigger in size
+and match the color of the turret they are shot from. The stars are made up of five
+triangles stacked on top of each other at different angles.
+
+• One-time aids
+
+One-time aids take the form of symmetrical crosses, resembling the cross found on a
+first aid kit. The crosses comprise of two rectangles perpendicular to each other.
+
+• GUI
+
+Situated in the upper side of the screen, the GUI (Graphical User Interface) comprises
+four clickable squares, each containing one type of turret. Underneath, the price of the
+turrets is present in the form of stars. To the right, three red squares are present to
+indicate the number of lives left. Underneath the lives, the collected stars are shown.
+
+2.2. Animations
+
+• Enemy and projectile movement
+
+Hexagons move in a straight line, appearing from the right side of the screen, toward
+the base situated in the left side, and rotate counterclockwise.
+Projectiles also move in a straight line from the barrel of the turrets to the right, toward
+enemies, and rotate clockwise.
+
+• Vanishing animation
+
+A turret vanishes when a hexagon touches or the player right-clicks them, by shrinking
+over the course of two seconds. Likewise, hexagons vanish when hit by projectiles, while
+the latter vanish instantly when hitting an enemy.
+
+2.3. Collision Detection
+The collision detection mechanism is accomplished by creating round invisible hitboxes that
+surround the turrets, projectiles and hexagons. Collision is achieved when the distance between
+the centers of the circles is smaller than the sum of their radii.
+
+2.4. Player interaction
+
+• Collecting Points
+
+Point stars use a similar hitbox to turrets, projectiles and enemies, but take the shape of
+a square instead of a circle. By clicking inside the hitbox with the cursor, the player is
+able to collect the points.
+
+• Placing and Deleting Turrets
+
+Turrets can be placed using the same square hitboxes but require an additional
+mechanism called “drag & drop”. To place a turret, the player moves the cursor inside
+the square containing the desired type of turret and left-clicks and holds the button. If
+the player has enough points, the turret can be dragged and placed. The turret is placed
+and points are deducted only if the cursor is inside an empty grid square.
+Using the same hitbox, right-clicking on a turret will make it vanish from the grid making
+the square empty again.
